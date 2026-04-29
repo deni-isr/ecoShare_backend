@@ -70,7 +70,7 @@ app.post('/api/login', async (req, res) => {
     
     res.json({ 
       message: 'Kirjautuminen onnistui!',
-      user: { id: user.id, firstname: user.firstname, lastname: user.lastname, username: user.username, email: user.email, is_admin: user.is_admin }
+      user: { id: user.id, firstname: user.firstname, lastname: user.lastname, username: user.username, email: user.email, is_admin: user.is_admin, is_master: user.is_master }
     });
   } catch (error) {
     res.status(500).json({ message: 'Palvelinvirhe' });
