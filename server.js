@@ -197,6 +197,26 @@ app.delete('/api/admin/users/:id', async (req, res) => {
   }
 });
 
+app.put('/api/admin/users/:id/master', async (req, res) => {
+  const { is_master } = req.body;
+  try {
+    await db.promise().query('UPDATE users SET is_master = ? WHERE id = ?', [is_master, req.params.id]);
+    res.json({ message: 'Rooli päivitetty' });
+  } catch (error) {
+    res.status(500).json({ message: 'Virhe roolin päivityksessä' });
+  }
+});
+
+app.put('/api/admin/products/:id', async (req, res) => {
+  const { title } = req.body;
+  try {
+    await db.promise().query('UPDATE products SET title = ? WHERE id = ?', [title, req.params.id]);
+    res.json({ message: 'Otsikko päivitetty' });
+  } catch (error) {
+    res.status(500).json({ message: 'Virhe muokkauksessa' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV !== 'test') {
