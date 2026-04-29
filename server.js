@@ -8,11 +8,6 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -27,7 +22,13 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '-' + file.originalname);
   }
 });
-const upload = multer({ storage });
+
+const uploadDir = path.join(__dirname, 'uploads');
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+const upload = multer({ dest: uploadDir });
 
 const db = mysql.createPool({
   host: process.env.DB_HOST,
