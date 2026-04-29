@@ -4,7 +4,14 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
+
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 const app = express();
 app.use(cors());
